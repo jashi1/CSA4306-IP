@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        /* Your provided CSS code goes here */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        /* root color */
+        :root {
+            --blue: #0188df;
+            --black: #444d53;
+            --white: #fff;
+        }
+
+        /* custom css */
+        * {
+            font-family: "Roboto", sans-serif;
+            margin: 0; padding: 0;
+            text-decoration: none;
+            text-transform: capitalize;
+            outline: none;
+            box-sizing: border-box;
+            transition: all linear .2s;
+        }
+
+        /* Add your remaining CSS code here */
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">MedCare <span>Hospital</span></div>
+        <nav class="navbar">
+            <ul>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#appointments">Book Appointment</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <i class="fa fa-bars" id="nav-toggle"></i>
+    </header>
+
+    <div class="home">
+        <h1 class="heading">Welcome to MedCare Hospital</h1>
+        <div class="row">
+            <div class="content">
+                <h1>Your Health, Our Priority</h1>
+                <p>Providing the best healthcare services with compassionate care.</p>
+            </div>
+            <div class="images">
+                <img src="hospital-image.jpg" alt="Hospital">
+            </div>
+        </div>
+    </div>
+
+    <section id="register">
+        <h2 class="title">User Registration</h2>
+        <form id="registrationForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            <input type="submit" value="Register" class="button">
+        </form>
+    </section>
+
+    <section id="appointments">
+        <h2 class="title">Book Appointment</h2>
+        <form id="appointmentForm">
+            <label for="patientName">Patient Name:</label>
+            <input type="text" id="patientName" required>
+            <label for="doctorSelect">Select Doctor:</label>
+            <select id="doctorSelect" required></select>
+            <label for="appointmentDate">Appointment Date:</label>
+            <input type="date" id="appointmentDate" required>
+            <input type="submit" value="Book Appointment" class="button">
+        </form>
+    </section>
+
+    <section id="about" class="about">
+        <h2 class="title">About Us</h2>
+        <div class="box-container">
+            <div class="box">
+                <div class="images">
+                    <img src="about-image.jpg" alt="About Us">
+                </div>
+                <div class="content">
+                    <h3>Our Mission</h3>
+                    <p>To provide high-quality healthcare services that meet the needs of our community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <h2 class="title">Contact Us</h2>
+        <div class="row">
+            <div class="form-container">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" required></textarea>
+                <input type="submit" value="Send Message" class="button">
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="box">
+            <h3 class="logo">MedCare <span>Hospital</span></h3>
+            <p>Providing quality healthcare since 1990.</p>
+        </div>
+        <div class="credit">© 2024 MedCare Hospital. All Rights Reserved.</div>
+    </footer>
+
+    <script>
+        const doctors = [
+            { id: 1, name: "Dr. Smith", specialty: "Cardiology" },
+            { id: 2, name: "Dr. Johnson", specialty: "Pediatrics" },
+            { id: 3, name: "Dr. Lee", specialty: "Dermatology" }
+        ];
+
+        let appointments = [];
+
+        function populateDoctors() {
+            const doctorSelect = document.getElementById("doctorSelect");
+            doctors.forEach(doctor => {
+                const option = document.createElement("option");
+                option.value = doctor.id;
+                option.textContent = `${doctor.name} - ${doctor.specialty}`;
+                doctorSelect.appendChild(option);
+            });
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            if (!username || !email || !password) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            alert("Registration successful for " + username);
+            document.getElementById("registrationForm").reset();
+        }
+
+        function bookAppointment(event) {
+            event.preventDefault();
+            const patientName = document.getElementById("patientName").value;
+            const doctorId = document.getElementById("doctorSelect").value;
+            const appointmentDate = document.getElementById("appointmentDate").value;
+
+            if (!patientName || !doctorId || !appointmentDate) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const appointment = {
+                patientName,
+                doctorId,
+                appointmentDate
+            };
+
+            appointments.push(appointment);
+            alert("Appointment booked successfully for " + patientName + "!");
+            document.getElementById("appointmentForm").reset();
+        }
+
+        document.getElementById("registrationForm").addEventListener("submit", registerUser);
+        document.getElementById("appointmentForm").addEventListener("submit", bookAppointment);
+        window.onload = function() {
+            populateDoctors();
+        };
+    </script>
+</body>
+</html>
