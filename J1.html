@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>MedCare Hospital Management System</title>
+</head>
+<body>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>MedCare Hospital</h1>
+            <h2>Login to Your Account</h2>
+            <form id="loginForm" action="javascript:void(0);">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit" onclick="goToHome()">Login</button>
+            </form>
+            <div id="loginError" class="error"></div>
+        </div>
+    </div>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page" style="display: none;">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>Welcome to MedCare Hospital</h1>
+            <nav>
+                <a href="javascript:void(0);" onclick="goToAppointment()">Book Appointment</a>
+                <a href="javascript:void(0);" onclick="goToDoctorStatus()">Doctor Status</a>
+                <a href="javascript:void(0);" onclick="goToAppointmentStatus()">Check Appointment Status</a>
+                <a href="javascript:void(0);" onclick="goToPayment()">Payment</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Appointment Page -->
+    <div id="appointmentPage" class="page" style="display: none;">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>Book an Appointment</h1>
+            <form id="appointmentForm" action="javascript:void(0);">
+                <input type="date" id="appointmentDate" required>
+                <select id="doctor" required>
+                    <option value="">Select Doctor</option>
+                    <option value="Dr. Smith">Dr. Smith</option>
+                    <option value="Dr. Johnson">Dr. Johnson</option>
+                    <option value="Dr. Pratol">Dr. Pratol</option>
+                </select>
+                <button type="submit" onclick="bookAppointment()">Book Appointment</button>
+            </form>
+            <div id="appointmentMessage"></div>
+            <nav>
+                <a href="javascript:void(0);" onclick="goToHome()">Back to Home</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Doctor Status Page -->
+    <div id="doctorStatusPage" class="page" style="display: none;">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>Check Doctor Status</h1>
+            <input type="text" id="doctorName" placeholder="Enter Doctor's Name">
+            <button onclick="checkDoctorStatus()">Check Status</button>
+            <div id="doctorStatusMessage"></div>
+            <nav>
+                <a href="javascript:void(0);" onclick="goToHome()">Back to Home</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Appointment Status Page -->
+    <div id="appointmentStatusPage" class="page" style="display: none;">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>Check Your Appointment Status</h1>
+            <input type="text" id="statusInput" placeholder="Enter your appointment ID">
+            <button onclick="checkAppointmentStatus()">Check Status</button>
+            <div id="statusMessage"></div>
+            <nav>
+                <a href="javascript:void(0);" onclick="goToHome()">Back to Home</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Payment Page -->
+    <div id="paymentPage" class="page" style="display: none;">
+        <div class="container">
+            <img src="https://via.placeholder.com/100" alt="Hospital Logo" class="logo">
+            <h1>Payment</h1>
+            <form id="paymentForm" action="javascript:void(0);">
+                <input type="text" id="cardNumber" placeholder="Card Number" required>
+                <input type="text" id="cardName" placeholder="Name on Card" required>
+                <input type="month" id="expiryDate" required>
+                <input type="text" id="cvv" placeholder="CVV" required>
+                <button type="submit" onclick="processPayment()">Pay</button>
+            </form>
+            <div id="paymentMessage"></div>
+            <nav>
+                <a href="javascript:void(0);" onclick="goToHome()">Back to Home</a>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        function goToHome() {
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('appointmentPage').style.display = 'none';
+            document.getElementById('doctorStatusPage').style.display = 'none';
+            document.getElementById('appointmentStatusPage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'none';
+        }
+
+        function goToAppointment() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('appointmentPage').style.display = 'block';
+        }
+
+        function goToDoctorStatus() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('doctorStatusPage').style.display = 'block';
+        }
+
+        function goToAppointmentStatus() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('appointmentStatusPage').style.display = 'block';
+        }
+
+        function goToPayment() {
+            document.getElementById('homePage').style.display = 'none';
+            document.getElementById('paymentPage').style.display = 'block';
+        }
+
+        function bookAppointment() {
+            const date = document.getElementById('appointmentDate').value;
+            const doctor = document.getElementById('doctor').value;
+            document.getElementById('appointmentMessage').innerText = `Appointment booked with ${doctor} on ${date}.`;
+        }
+
+        function checkDoctorStatus() {
+            const doctorName = document.getElementById('doctorName').value;
+            document.getElementById('doctorStatusMessage').innerText = `Status for Dr. ${doctorName}: Available`;
+        }
+
+        function checkAppointmentStatus() {
+            const appointmentId = document.getElementById('statusInput').value;
+            document.getElementById('statusMessage').innerText = `Status for Appointment ID ${appointmentId}: Confirmed`;
+        }
+
+        function processPayment() {
+            document.getElementById('paymentMessage').innerText = "Payment Successful!";
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://www.hdwallpapers.in/download/hospital_building_hd-wallpaper-1600x900.jpg'); /* Hospital background image */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin: 100px auto; /* Centers the container vertically */
+        }
+
+        h1, h2 {
+            color: #007bff;
+        }
+
+        .logo {
+            width: 100px; /* Adjust the logo size as needed */
+            margin-bottom: 20px;
+        }
+
+        input, select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</body>
+</html>
